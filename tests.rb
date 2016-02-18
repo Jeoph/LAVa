@@ -36,6 +36,7 @@ class ApplicationTest < Minitest::Test
   end
 
   def test_associate_terms_with_courses
+    output = ""
     s = Term.create(name: "Spring 2016")
     a = Course.create(name: "Accounting")
     c = Course.create(name: "Communication")
@@ -43,20 +44,21 @@ class ApplicationTest < Minitest::Test
     begin
       s.destroy
     rescue
-      "Cannot destroy, term contains courses"
+      output = "Cannot destroy, term contains courses"
     end
-    assert_equal "Cannot destroy, term contains courses", "Cannot destroy, term contains courses"
+    assert_equal "Cannot destroy, term contains courses", output
     f = Term.create(name: "Fall 2016")
     f.destroy
     begin
       f.reload
     rescue
-      "Cannot find term"
+      output = "Cannot find term"
     end
-    assert_equal "Cannot find term", "Cannot find term"
+    assert_equal "Cannot find term", output
   end
 
   def test_associate_courses_with_course_students
+    output = ""
     a = Course.create(name: "Accounting")
     g = CourseStudent.create(student_id: 1)
     j = CourseStudent.create(student_id: 2)
@@ -64,17 +66,26 @@ class ApplicationTest < Minitest::Test
     begin
       a.destroy
     rescue
-      "Cannot destroy, course contains course students"
+      output = "Cannot destroy, course contains course students"
     end
-    assert_equal "Cannot destroy, course contains course students", "Cannot destroy, course contains course students"
+    assert_equal "Cannot destroy, course contains course students", output
     c = Course.create(name: "Communication")
     c.destroy
     begin
       c.reload
     rescue
-      "Cannot find course"
+      output = "Cannot find course"
     end
-    assert_equal "Cannot find course", "Cannot find course"
+    assert_equal "Cannot find course", output
+  end
+
+  def test_associate_assignments_with_courses
+    c = Course.create(name: "Computer Programming")
+    a = Assignment.create(name: "Test Driven Development")
+    c.assignments << a
+    c.destroy
+    assert c.destroyed?
+    assert a.destroyed?
   end
 
 
