@@ -25,4 +25,32 @@ class ApplicationTest < Minitest::Test
     assert true
   end
 
+  def test_can_associate_lessons_with_readings
+    l = Lesson.create()
+  end
+
+
+
+
+
 end
+
+
+erson B:
+
+# * Associate `lessons` with `readings` (both directions).  When a lesson is destroyed, its readings should be automatically destroyed.
+# * Associate `lessons` with `courses` (both directions).  When a course is destroyed, its lessons should be automatically destroyed.
+# * Associate `courses` with `course_instructors` (both directions).  If the course has any students associated with it, the course should not be deletable.
+# * Associate `lessons` with their `in_class_assignments` (both directions).
+# * Set up a Course to have many `readings` through the Course's `lessons`.
+# * Validate that Schools must have `name`.
+# * Validate that Terms must have `name`, `starts_on`, `ends_on`, and `school_id`.
+# * Validate that the User has a `first_name`, a `last_name`, and an `email`.
+# * Validate that the User's `email` is unique.
+# * Validate that the User's `email` has the appropriate form for an e-mail address.  Use a regular expression.
+# * Validate that the User's `photo_url` must start with `http://` or `https://`.  Use a regular expression.
+# * Validate that Assignments have a `course_id`, `name`, and `percent_of_grade`.
+# * Validate that the Assignment `name` is unique within a given `course_id`.
+#
+# Don't forget to write tests for each of these before coding them!
+#

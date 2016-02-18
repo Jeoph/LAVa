@@ -1,6 +1,6 @@
 # Legacy Associations and Validations
 
-Geoff and Jeff rule. Everyone else suxorz
+Follow the Lebowski
 
 ## Description
 
