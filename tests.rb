@@ -12,6 +12,8 @@ ActiveRecord::Base.establish_connection(
   database: 'test.sqlite3'
 )
 
+ActiveRecord::Migration.verbose = false
+
 # Gotta run migrations before we can run tests.  Down will fail the first time,
 # so we wrap it in a begin/rescue.
 begin ApplicationMigration.migrate(:down); rescue; end
@@ -23,6 +25,14 @@ class ApplicationTest < Minitest::Test
 
   def test_truth
     assert true
+  end
+
+  def test_associate_schools_with_terms
+    a = School.create(name: "Appalachian State University")
+    s = Term.create(name: "Spring 2016")
+    f = Term.create(name: "Fall 2016")
+    a = [s, f]
+    assert_equal a, [s, f]
   end
 
 end
