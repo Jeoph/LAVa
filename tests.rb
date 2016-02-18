@@ -31,8 +31,29 @@ class ApplicationTest < Minitest::Test
     a = School.create(name: "Appalachian State University")
     s = Term.create(name: "Spring 2016")
     f = Term.create(name: "Fall 2016")
-    a = [s, f]
-    assert_equal a, [s, f]
+    a.terms = [s, f]
+    assert_equal a.terms, [s, f]
+  end
+
+  def test_associate_terms_with_courses
+    s = Term.create(name: "Spring 2016")
+    a = Course.create(name: "Accounting")
+    c = Course.create(name: "Communication")
+    s.courses = [a, c]
+    begin
+      s.destroy
+    rescue
+      "Cannot destroy, term contains courses"
+    end
+    assert_equal "Cannot destroy, term contains courses", "Cannot destroy, term contains courses"
+    f = Term.create(name: "Fall 2016")
+    f.destroy
+    begin
+      f.reload
+    rescue
+      "Cannot find term"
+    end
+    assert_equal "Cannot find term", "Cannot find term"
   end
 
 end
