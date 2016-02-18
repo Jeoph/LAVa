@@ -25,7 +25,7 @@ class ApplicationTest < Minitest::Test
     assert true
   end
 
-  def test_associate_lessons_with_readings
+  def test_associate_lessons_with_readings_and_destroy_readings_with_lessons
     l = Lesson.create(name: "Defense Against Ruby Black Magic")
     r1 = Reading.create(caption: "Do You Believe In Magic?", url: "http://gilesbowkett.blogspot.com/2009/07/do-you-believe-in-magic.html")
     r2 = Reading.create(caption: "Why Ruby on Rails won't become mainstream", url: "http://beust.com/weblog/2006/04/06/why-ruby-on-rails-wont-become-mainstream/")
@@ -33,12 +33,28 @@ class ApplicationTest < Minitest::Test
     l.readings << r2
     assert_equal [r1, r2], l.readings
     l.destroy
-    assert Lesson.where(id: r1.id).empty?
+    assert l.destroyed?
+    assert r1.destroyed?
+    # assert l.where(id: r1.id).empty?
   end
 
+  def test_associate_lessons_with_courses_and_destroy_lessons_with_courses
+    c = Course.create(name: "A Ruby Is Not A Gem")
+    l1 = Lesson.create(name: "Defense Against Ruby Black Magic")
+    l2 = Lesson.create(name: "The History of Introverts Creating New Ways To Avoid Direct Contact: Computing Languages")
+    c.lessons << l1
+    c.lessons << l2
+    assert_equal [l1, l2], c.lessons
+    c.destroy
+    assert c.destroyed?
+    assert l1.destroyed?
+    # assert Course.where(id: l1.id).empty?
+  end
 
-
-
+  # def test_associate_courses_with_course_instructors
+  #   c = Course.create(name: "A Ruby Is Not A Gem")
+  #   i = Instructor.create(name: "Michael")
+  # end
 
 
 
@@ -49,7 +65,7 @@ end
 
 # * Associate `lessons` with `readings` (both directions).  When a lesson is destroyed, its readings should be automatically destroyed.
 # * Associate `lessons` with `courses` (both directions).  When a course is destroyed, its lessons should be automatically destroyed.
-# * Associate `courses` with `course_instructors` (both directions).  If the course has any students associated with it, the course should not be deletable.
+# * Associate `courses` with `course_instructors` (both directions).  If the course has any instructors associated with it, the course should not be deletable.
 # * Associate `lessons` with their `in_class_assignments` (both directions).
 # * Set up a Course to have many `readings` through the Course's `lessons`.
 # * Validate that Schools must have `name`.
