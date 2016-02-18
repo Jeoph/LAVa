@@ -1,5 +1,7 @@
 # Legacy Associations and Validations
 
+Geoff and Jeff rule. Everyone else suxorz
+
 ## Description
 
 Take an existing legacy codebase with no associations or validations and add them.
