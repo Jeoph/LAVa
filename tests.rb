@@ -51,10 +51,13 @@ class ApplicationTest < Minitest::Test
     # assert Course.where(id: l1.id).empty?
   end
 
-  # def test_associate_courses_with_course_instructors
-  #   c = Course.create(name: "A Ruby Is Not A Gem")
-  #   i = Instructor.create(name: "Michael")
-  # end
+  def test_associate_courses_with_course_instructors_but_not_destroy_with_instructors
+    course = Course.create(name: "A Ruby Is Not A Gem")
+    i = CourseInstructor.create()
+    course.course_instructors << i
+    assert_equal [i], course.course_instructors
+    assert_raises do course.destroy end
+  end
 
 
 
