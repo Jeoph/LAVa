@@ -56,4 +56,27 @@ class ApplicationTest < Minitest::Test
     assert_equal "Cannot find term", "Cannot find term"
   end
 
+  def test_associate_courses_with_course_students
+    a = Course.create(name: "Accounting")
+    g = CourseStudent.create(student_id: 1)
+    j = CourseStudent.create(student_id: 2)
+    a.course_students = [g, j]
+    begin
+      a.destroy
+    rescue
+      "Cannot destroy, course contains course students"
+    end
+    assert_equal "Cannot destroy, course contains course students", "Cannot destroy, course contains course students"
+    c = Course.create(name: "Communication")
+    c.destroy
+    begin
+      c.reload
+    rescue
+      "Cannot find course"
+    end
+    assert_equal "Cannot find course", "Cannot find course"
+  end
+
+
+
 end
