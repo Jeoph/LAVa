@@ -25,9 +25,18 @@ class ApplicationTest < Minitest::Test
     assert true
   end
 
-  def test_can_associate_lessons_with_readings
-    l = Lesson.create()
+  def test_associate_lessons_with_readings
+    l = Lesson.create(name: "Defense Against Ruby Black Magic")
+    r1 = Reading.create(caption: "Do You Believe In Magic?", url: "http://gilesbowkett.blogspot.com/2009/07/do-you-believe-in-magic.html")
+    r2 = Reading.create(caption: "Why Ruby on Rails won't become mainstream", url: "http://beust.com/weblog/2006/04/06/why-ruby-on-rails-wont-become-mainstream/")
+    l.readings << r1
+    l.readings << r2
+    assert_equal [r1, r2], l.readings
+    l.destroy
+    assert Lesson.where(id: r1.id).empty?
   end
+
+
 
 
 
@@ -36,7 +45,7 @@ class ApplicationTest < Minitest::Test
 end
 
 
-erson B:
+# Person B:
 
 # * Associate `lessons` with `readings` (both directions).  When a lesson is destroyed, its readings should be automatically destroyed.
 # * Associate `lessons` with `courses` (both directions).  When a course is destroyed, its lessons should be automatically destroyed.
