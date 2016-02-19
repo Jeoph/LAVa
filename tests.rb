@@ -120,4 +120,9 @@ class ApplicationTest < Minitest::Test
     f.courses << c
     assert f.save!
   end
+
+  def test_validate_course_code_starts_with_three_letters_and_ends_with_three_numbers
+    a = Course.new(name: "Accounting", course_code: "123ACC")
+    assert_raises do a.save! end
+  end
 end

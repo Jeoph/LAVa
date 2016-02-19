@@ -4,7 +4,9 @@ class Course < ActiveRecord::Base
   has_many :assignments, dependent: :destroy
 
   validates :name, presence: true
-  validates :course_code, presence: true, uniqueness: {scope: :term_id, message: "Term already has this course"}
+  validates :course_code, presence: true,
+                          uniqueness: {scope: :term_id, message: "Term already has this course"},
+                          format: {with: /\A\w\w\w\d\d\d\b/i, on: :create}
 
   default_scope { order("courses.term_id DESC, courses.course_code, courses.id DESC") }
 
