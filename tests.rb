@@ -93,32 +93,40 @@ class ApplicationTest < Minitest::Test
     refute Term.exists?(fall.id)
   end
 
-  def test_user_must_have_attributes
-    u1 = User.create(first_name: "George Michael", last_name: "Bluth")
-    u2 = User.create(first_name: "Michael", last_name: "Bluth", email: "gobsuxors@gmail.com")
-    assert User.find(u2.id)
-    refute User.exists?(u1.id)
-  end
+  # def test_user_must_have_attributes
+  #   u1 = User.create(first_name: "George Michael", last_name: "Bluth")
+  #   u2 = User.create(first_name: "Michael", last_name: "Bluth", email: "gobsuxors@gmail.com")
+  #   assert User.find(u2.id)
+  #   refute User.exists?(u1.id)
+  # end
+  #
+  # def test_user_email_unique_required
+  #   u1 = User.create(first_name: "Tobias", last_name: "Funke", email: "2blu4u@gmail.com")
+  #   u2 = User.create(first_name: "George Michael", last_name: "Bluth", email: "2blu4u@gmail.com")
+  #   assert User.find(u1.id)
+  #   refute User.exists?(u2.id)
+  # end
+  #
+  # def test_user_email_format_appropriate
+  #   u1 = User.create(first_name: "Tobias", last_name: "Funke", email: "actorz4ever@gmail.com")
+  #   u2 = User.create(first_name: "George Michael", last_name: "Bluth", email: "Y@LO@gmail.com")
+  #   assert User.find(u1.id)
+  #   refute User.exists?(u2.id)
+  # end
+  #
+  # def test_user_photo_url_start_correctly
+  #   u1 = User.create(first_name: "Tobias", last_name: "Funke", email: "no.naked@gmail.com", photo_url: "https://s-media-cache-ak0.pinimg.com/564x/28/54/40/285440d2714800f99169e8b3ac49969e.jpg")
+  #   u2 = User.create(first_name: "George Michael", last_name: "Bluth", email: "cuzinsluveachother@gmail.com", photo_url: "www.bananagrandstanding.jpg")
+  #   assert User.find(u1.id)
+  #   refute User.exists?(u2.id)
+  # end
 
-  def test_user_email_unique_required
-    u1 = User.create(first_name: "Tobias", last_name: "Funke", email: "2blu4u@gmail.com")
-    u2 = User.create(first_name: "George Michael", last_name: "Bluth", email: "2blu4u@gmail.com")
-    assert User.find(u1.id)
-    refute User.exists?(u2.id)
-  end
-
-  def test_user_email_format_appropriate
-    u1 = User.create(first_name: "Tobias", last_name: "Funke", email: "actorz4ever@gmail.com")
-    u2 = User.create(first_name: "George Michael", last_name: "Bluth", email: "Y@LO@gmail.com")
-    assert User.find(u1.id)
-    refute User.exists?(u2.id)
-  end
-
-  def test_user_photo_url_start_correctly
-    u1 = User.create(first_name: "Tobias", last_name: "Funke", email: "no.naked@gmail.com", photo_url: "https://s-media-cache-ak0.pinimg.com/564x/28/54/40/285440d2714800f99169e8b3ac49969e.jpg")
-    u2 = User.create(first_name: "George Michael", last_name: "Bluth", email: "cuzinsluveachother@gmail.com", photo_url: "www.bananagrandstanding.jpg")
-    assert User.find(u1.id)
-    refute User.exists?(u2.id)
+  def test_assignment_has_attributes
+    c = Course.create(name: "A Ruby Is Not A Gem")
+    a1 = Assignment.create(name: "What Ruby?")
+    a2 = Assignment.create(course_id: c.id, name: "WTF Ruby?", percent_of_grade: 0.2)
+    assert Assignment.find(a2.id)
+    refute Assignment.exists?(a1.id)
   end
 end
 
@@ -126,7 +134,6 @@ end
 # Person B:
 
 # * Associate `lessons` with their `in_class_assignments` (both directions).
-# * Validate that the User's `photo_url` must start with `http://` or `https://`.  Use a regular expression.
 # * Validate that Assignments have a `course_id`, `name`, and `percent_of_grade`.
 # * Validate that the Assignment `name` is unique within a given `course_id`.
 #
