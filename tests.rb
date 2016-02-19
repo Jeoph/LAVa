@@ -41,20 +41,10 @@ class ApplicationTest < Minitest::Test
     a = Course.create(name: "Accounting")
     c = Course.create(name: "Communication")
     s.courses = [a, c]
-    begin
-      s.destroy
-    rescue
-      output = "Cannot destroy, term contains courses"
-    end
-    assert_equal "Cannot destroy, term contains courses", output
+    assert_raises do s.destroy end
     f = Term.create(name: "Fall 2016")
     f.destroy
-    begin
-      f.reload
-    rescue
-      output = "Cannot find term"
-    end
-    assert_equal "Cannot find term", output
+    assert f.destroyed?
   end
 
   def test_associate_courses_with_course_students
@@ -63,20 +53,10 @@ class ApplicationTest < Minitest::Test
     g = CourseStudent.create(student_id: 1)
     j = CourseStudent.create(student_id: 2)
     a.course_students = [g, j]
-    begin
-      a.destroy
-    rescue
-      output = "Cannot destroy, course contains course students"
-    end
-    assert_equal "Cannot destroy, course contains course students", output
+    assert_raises do a.destroy end
     c = Course.create(name: "Communication")
     c.destroy
-    begin
-      c.reload
-    rescue
-      output = "Cannot find course"
-    end
-    assert_equal "Cannot find course", output
+    assert c.destroyed?
   end
 
   def test_associate_assignments_with_courses
@@ -88,6 +68,16 @@ class ApplicationTest < Minitest::Test
     assert a.destroyed?
   end
 
+  def test_associate_lessons_with_pre_class_assignments
+    skip
+  end
 
-
+  def test_school_has_many_courses_through_terms
+    a = School.create(name: "Appalachian State University")
+    s = Term.create(name: "Spring 2016")
+    c = Course.create(name: "Communication")
+    a.terms << s
+    s.courses << c
+    assert a.courses.include?(c)
+  end
 end
