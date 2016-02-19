@@ -95,10 +95,19 @@ class ApplicationTest < Minitest::Test
 
   def test_user_must_have_attributes
     u1 = User.create(first_name: "George Michael", last_name: "Bluth")
-    u2 = User.create(first_name: "Michael", last_name: "Bluth", email: "2blu4u@gmail.com")
+    u2 = User.create(first_name: "Michael", last_name: "Bluth", email: "gobsuxors@gmail.com")
     assert User.find(u2.id)
     refute User.exists?(u1.id)
   end
+
+  def test_user_email_unique
+    u1 = User.create(first_name: "Tobias", last_name: "Funke", email: "2blu4u@gmail.com")
+    u2 = User.create(first_name: "George Michael", last_name: "Bluth", email: "2blu4u@gmail.com")
+    assert User.find(u1.id)
+    refute User.exists?(u2.id)
+  end
+
+  
 end
 
 
