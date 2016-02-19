@@ -59,13 +59,12 @@ class ApplicationTest < Minitest::Test
     assert_raises do course.destroy end
   end
 
-  def test_associate_lessons_with_in_class_assignments
-    skip
-    l = Lesson.create(name: "Defense Against Ruby Black Magic")
-    a = Assignment.create(name: "WTF Ruby?")
-    l.assignments << a
-    assert Lesson.in_class_assignments.find(a.in_class_assignment_id)
-  end
+  # def test_associate_lessons_with_in_class_assignments
+  #   l = Lesson.create(name: "Defense Against Ruby Black Magic")
+  #   a = Assignment.create(name: "WTF Ruby?")
+  #   l.assignments << a
+  #   assert Lesson.in_class_assignments.find(a.in_class_assignment_id)
+  # end
 
   def test_course_has_many_readings
     c = Course.create(name: "A Ruby Is Not A Gem")
@@ -93,33 +92,39 @@ class ApplicationTest < Minitest::Test
     refute Term.exists?(fall.id)
   end
 
-  # def test_user_must_have_attributes
-  #   u1 = User.create(first_name: "George Michael", last_name: "Bluth")
-  #   u2 = User.create(first_name: "Michael", last_name: "Bluth", email: "gobsuxors@gmail.com")
-  #   assert User.find(u2.id)
-  #   refute User.exists?(u1.id)
-  # end
-  #
-  # def test_user_email_unique_required
-  #   u1 = User.create(first_name: "Tobias", last_name: "Funke", email: "2blu4u@gmail.com")
-  #   u2 = User.create(first_name: "George Michael", last_name: "Bluth", email: "2blu4u@gmail.com")
-  #   assert User.find(u1.id)
-  #   refute User.exists?(u2.id)
-  # end
-  #
-  # def test_user_email_format_appropriate
-  #   u1 = User.create(first_name: "Tobias", last_name: "Funke", email: "actorz4ever@gmail.com")
-  #   u2 = User.create(first_name: "George Michael", last_name: "Bluth", email: "Y@LO@gmail.com")
-  #   assert User.find(u1.id)
-  #   refute User.exists?(u2.id)
-  # end
-  #
-  # def test_user_photo_url_start_correctly
-  #   u1 = User.create(first_name: "Tobias", last_name: "Funke", email: "no.naked@gmail.com", photo_url: "https://s-media-cache-ak0.pinimg.com/564x/28/54/40/285440d2714800f99169e8b3ac49969e.jpg")
-  #   u2 = User.create(first_name: "George Michael", last_name: "Bluth", email: "cuzinsluveachother@gmail.com", photo_url: "www.bananagrandstanding.jpg")
-  #   assert User.find(u1.id)
-  #   refute User.exists?(u2.id)
-  # end
+  def test_user_must_have_attributes
+    u1 = User.create(first_name: "George Michael", last_name: "Bluth", photo_url: "www.bananagrandstanding.jpg")
+    u2 = User.create(first_name: "Michael", last_name: "Bluth", email: "gobsuxors@gmail.com", photo_url: "https://s-media-cache-ak0.pinimg.com/564x/28/54/40/285440d2714800f99169e8b3ac49969e.jpg")
+    # refute_equal u2.first_name, nil
+    # refute_equal u2.last_name, nil
+    # refute_equal u2.email, nil
+    assert User.find(u2.id)
+    refute User.exists?(u1.id)
+  end
+
+  def test_user_email_unique_required
+    u1 = User.create(first_name: "Tobias", last_name: "Funke", email: "2blu4u@gmail.com", photo_url: "https://s-media-cache-ak0.pinimg.com/564x/28/54/40/285440d2714800f99169e8b3ac49969e.jpg")
+    u2 = User.create(first_name: "George Michael", last_name: "Bluth", email: "2blu4u@gmail.com", photo_url: "www.bananagrandstanding.jpg")
+    # refute_equal u1.first_name, nil
+    # refute_equal u1.last_name, nil
+    # refute_equal u1.email, nil
+    assert User.find(u1.id)
+    refute User.exists?(u2.id)
+  end
+
+  def test_user_email_format_appropriate
+    u1 = User.create(first_name: "Tobias", last_name: "Funke", email: "actorz4ever@gmail.com", photo_url: "https://s-media-cache-ak0.pinimg.com/564x/28/54/40/285440d2714800f99169e8b3ac49969e.jpg")
+    u2 = User.create(first_name: "George Michael", last_name: "Bluth", email: "Y@LO@gmail.com", photo_url: "www.bananagrandstanding.jpg")
+    assert User.find(u1.id)
+    refute User.exists?(u2.id)
+  end
+
+  def test_user_photo_url_start_correctly
+    u1 = User.create(first_name: "Tobias", last_name: "Funke", email: "never.nude@gmail.com", photo_url: "https://s-media-cache-ak0.pinimg.com/564x/28/54/40/285440d2714800f99169e8b3ac49969e.jpg")
+    u2 = User.create(first_name: "George Michael", last_name: "Bluth", email: "cuzinsluveachother@gmail.com", photo_url: "www.bananagrandstanding.jpg")
+    assert User.find(u1.id).inspect
+    refute User.exists?(u2.id)
+  end
 
   def test_assignments_have_attributes
     c = Course.create(name: "A Ruby Is Not A Gem")
