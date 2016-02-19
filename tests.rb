@@ -70,6 +70,9 @@ class ApplicationTest < Minitest::Test
 
   def test_associate_lessons_with_pre_class_assignments
     a = Assignment.create!()
+    l = Lesson.create!(name: "Figure out how to make it work!")
+    a.pre_class_assignments << l
+    assert_equal a.pre_class_assignments.first, l
   end
 
   def test_school_has_many_courses_through_terms
