@@ -33,7 +33,7 @@ class ApplicationTest < Minitest::Test
     s = Term.create!(name: "Spring 2016", starts_on: 2016/1/1, ends_on: 2016/6/1, school_id: a.id)
     f = Term.create!(name: "Fall 2016", starts_on: 2016/8/1, ends_on: 2016/12/1, school_id: a.id)
     a.terms = [s, f]
-    assert_equal a.terms, [s, f]
+    assert_equal a.reload.terms, [s.reload, f.reload]
   end
 
   def test_associate_terms_with_courses
@@ -130,19 +130,19 @@ class ApplicationTest < Minitest::Test
     assert_raises do a.save! end
   end
 
-#   def test_associate_lessons_with_readings_and_destroy_readings_with_lessons
-#     l = Lesson.create(name: "Defense Against Ruby Black Magic")
-#     r1 = Reading.create(caption: "Do You Believe In Magic?", url: "http://gilesbowkett.blogspot.com/2009/07/do-you-believe-in-magic.html")
-#     r2 = Reading.create(caption: "Why Ruby on Rails won't become mainstream", url: "http://beust.com/weblog/2006/04/06/why-ruby-on-rails-wont-become-mainstream/")
-#     l.readings << r1
-#     l.readings << r2
-#     assert_equal [r1, r2], l.readings
-#     l.destroy
-#     assert l.destroyed?
-#     assert r1.destroyed?
-#     # assert l.where(id: r1.id).empty?
-#   end
-#
+  # def test_associate_lessons_with_readings_and_destroy_readings_with_lessons
+  #   l = Lesson.create(name: "Defense Against Ruby Black Magic")
+  #   r1 = Reading.create(caption: "Do You Believe In Magic?", url: "http://gilesbowkett.blogspot.com/2009/07/do-you-believe-in-magic.html")
+  #   r2 = Reading.create(caption: "Why Ruby on Rails won't become mainstream", url: "http://beust.com/weblog/2006/04/06/why-ruby-on-rails-wont-become-mainstream/")
+  #   l.readings << r1
+  #   l.readings << r2
+  #   assert_equal [r1, r2], l.readings
+  #   l.destroy
+  #   assert l.destroyed?
+  #   assert r1.destroyed?
+  #   # assert l.where(id: r1.id).empty?
+  # end
+
 #   def test_associate_lessons_with_courses_and_destroy_lessons_with_courses
 #     c = Course.create(name: "A Ruby Is Not A Gem")
 #     l1 = Lesson.create(name: "Defense Against Ruby Black Magic")
