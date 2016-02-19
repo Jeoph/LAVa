@@ -51,7 +51,7 @@ class ApplicationTest < Minitest::Test
     # assert Course.where(id: l1.id).empty?
   end
 
-  def test_associate_courses_with_course_instructors_but_not_destroy_with_instructors
+  def test_associate_courses_with_course_instructors_but_not_destroy_with_course_instructors
     course = Course.create(name: "A Ruby Is Not A Gem")
     i = CourseInstructor.create()
     course.course_instructors << i
@@ -59,8 +59,32 @@ class ApplicationTest < Minitest::Test
     assert_raises do course.destroy end
   end
 
+  def test_associate_lessons_with_in_class_assignments
+    skip
+    l = Lesson.create(name: "Defense Against Ruby Black Magic")
+    a = Assignment.create(name: "WTF Ruby?")
+    l.assignments << a
+    assert
+  end
 
+  def test_course_has_many_readings
+    c = Course.create(name: "A Ruby Is Not A Gem")
+    l = Lesson.create(name: "Defense Against Ruby Black Magic")
+    c.lessons << l
+    r1 = Reading.create(caption: "Do You Believe In Magic?", url: "http://gilesbowkett.blogspot.com/2009/07/do-you-believe-in-magic.html")
+    r2 = Reading.create(caption: "Why Ruby on Rails won't become mainstream", url: "http://beust.com/weblog/2006/04/06/why-ruby-on-rails-wont-become-mainstream/")
+    l.readings << r1
+    l.readings << r2
+    assert_equal [r1, r2], c.readings
+  end
 
+  def test_school_must_have_name
+    s1 = School.create(name: "Introverts Unite")
+    s2 = School.create()
+    assert School.find(s1.id)
+    # refute School.find(s2.id)
+    refute School.exists?(s2.id)
+  end
 end
 
 
