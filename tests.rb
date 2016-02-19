@@ -93,13 +93,13 @@ class ApplicationTest < Minitest::Test
     refute Term.exists?(fall.id)
   end
 
-#   def test_user_must_have_attributes
-#     u1 = User.create(first_name: "George Michael", last_name: "Bluth")
-#     u2 = User.create(first_name: "Michael", last_name: "Bluth", email: "2blu4u@gmail.com")
-#     assert User.find(u2.id)
-#     refute User.exists?(u1.id)
-#   end
-# end
+  def test_user_must_have_attributes
+    u1 = User.create(first_name: "George Michael", last_name: "Bluth")
+    u2 = User.create(first_name: "Michael", last_name: "Bluth", email: "2blu4u@gmail.com")
+    assert User.find(u2.id)
+    refute User.exists?(u1.id)
+  end
+end
 
 
 # Person B:
