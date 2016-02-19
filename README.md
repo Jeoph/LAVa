@@ -1,5 +1,7 @@
 # Legacy Associations and Validations
 
+Follow the Lebowski
+
 ## Description
 
 Take an existing legacy codebase with no associations or validations and add them.
