@@ -121,12 +121,20 @@ class ApplicationTest < Minitest::Test
   #   refute User.exists?(u2.id)
   # end
 
-  def test_assignment_has_attributes
+  def test_assignments_have_attributes
     c = Course.create(name: "A Ruby Is Not A Gem")
     a1 = Assignment.create(name: "What Ruby?")
     a2 = Assignment.create(course_id: c.id, name: "WTF Ruby?", percent_of_grade: 0.2)
     assert Assignment.find(a2.id)
     refute Assignment.exists?(a1.id)
+  end
+
+  def test_assignments_are_unique_within_id
+    c = Course.create(name: "A Ruby Is Not A Gem")
+    a1 = Assignment.create(course_id: c.id, name: "WTF Ruby?", percent_of_grade: 0.4)
+    a2 = Assignment.create(course_id: c.id, name: "WTF Ruby?", percent_of_grade: 0.2)
+    assert Assignment.find(a1.id)
+    refute Assignment.exists?(a2.id)
   end
 end
 
@@ -134,7 +142,6 @@ end
 # Person B:
 
 # * Associate `lessons` with their `in_class_assignments` (both directions).
-# * Validate that Assignments have a `course_id`, `name`, and `percent_of_grade`.
 # * Validate that the Assignment `name` is unique within a given `course_id`.
 #
 # Don't forget to write tests for each of these before coding them!
