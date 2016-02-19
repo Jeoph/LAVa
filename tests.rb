@@ -93,8 +93,8 @@ class ApplicationTest < Minitest::Test
   end
 
   def test_user_must_have_attributes
-    u1 = User.create(first_name: "George Michael", last_name: "Bluth", photo_url: "www.bananagrandstanding.jpg")
-    u2 = User.create(first_name: "Michael", last_name: "Bluth", email: "gobsuxors@gmail.com", photo_url: "https://s-media-cache-ak0.pinimg.com/564x/28/54/40/285440d2714800f99169e8b3ac49969e.jpg")
+    u1 = User.create(first_name: "George Michael", last_name: "Bluth")
+    u2 = User.create(first_name: "Michael", last_name: "Bluth", email: "gobsuxors@gmail.com")
     # refute_equal u2.first_name, nil
     # refute_equal u2.last_name, nil
     # refute_equal u2.email, nil
@@ -103,8 +103,8 @@ class ApplicationTest < Minitest::Test
   end
 
   def test_user_email_unique_required
-    u1 = User.create(first_name: "Tobias", last_name: "Funke", email: "2blu4u@gmail.com", photo_url: "https://s-media-cache-ak0.pinimg.com/564x/28/54/40/285440d2714800f99169e8b3ac49969e.jpg")
-    u2 = User.create(first_name: "George Michael", last_name: "Bluth", email: "2blu4u@gmail.com", photo_url: "www.bananagrandstanding.jpg")
+    u1 = User.create(first_name: "Tobias", last_name: "Funke", email: "2blu4u@gmail.com")
+    u2 = User.create(first_name: "George Michael", last_name: "Bluth", email: "2blu4u@gmail.com")
     # refute_equal u1.first_name, nil
     # refute_equal u1.last_name, nil
     # refute_equal u1.email, nil
@@ -113,8 +113,8 @@ class ApplicationTest < Minitest::Test
   end
 
   def test_user_email_format_appropriate
-    u1 = User.create(first_name: "Tobias", last_name: "Funke", email: "actorz4ever@gmail.com", photo_url: "https://s-media-cache-ak0.pinimg.com/564x/28/54/40/285440d2714800f99169e8b3ac49969e.jpg")
-    u2 = User.create(first_name: "George Michael", last_name: "Bluth", email: "Y@LO@gmail.com", photo_url: "www.bananagrandstanding.jpg")
+    u1 = User.create(first_name: "Tobias", last_name: "Funke", email: "actorz4ever@gmail.com")
+    u2 = User.create(first_name: "George Michael", last_name: "Bluth", email: "Y@LO@gmail.com")
     assert User.find(u1.id)
     refute User.exists?(u2.id)
   end
