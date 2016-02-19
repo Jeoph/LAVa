@@ -64,7 +64,7 @@ class ApplicationTest < Minitest::Test
     l = Lesson.create(name: "Defense Against Ruby Black Magic")
     a = Assignment.create(name: "WTF Ruby?")
     l.assignments << a
-    assert
+    assert Lesson.in_class_assignments.find(a.in_class_assignment_id)
   end
 
   def test_course_has_many_readings
@@ -82,21 +82,29 @@ class ApplicationTest < Minitest::Test
     s1 = School.create(name: "Introverts Unite")
     s2 = School.create()
     assert School.find(s1.id)
-    # refute School.find(s2.id)
     refute School.exists?(s2.id)
   end
-end
+
+  def test_terms_must_have_attributes
+    s = School.create(name: "Introverts Unite")
+    fall = Term.create(name: "Fall")
+    spring = Term.create(name: "Spring", starts_on: 2016/2/1, ends_on: 2016/4/22, school_id: s.id)
+    assert Term.find(spring.id)
+    refute Term.exists?(fall.id)
+  end
+
+#   def test_user_must_have_attributes
+#     u1 = User.create(first_name: "George Michael", last_name: "Bluth")
+#     u2 = User.create(first_name: "Michael", last_name: "Bluth", email: "2blu4u@gmail.com")
+#     assert User.find(u2.id)
+#     refute User.exists?(u1.id)
+#   end
+# end
 
 
 # Person B:
 
-# * Associate `lessons` with `readings` (both directions).  When a lesson is destroyed, its readings should be automatically destroyed.
-# * Associate `lessons` with `courses` (both directions).  When a course is destroyed, its lessons should be automatically destroyed.
-# * Associate `courses` with `course_instructors` (both directions).  If the course has any instructors associated with it, the course should not be deletable.
 # * Associate `lessons` with their `in_class_assignments` (both directions).
-# * Set up a Course to have many `readings` through the Course's `lessons`.
-# * Validate that Schools must have `name`.
-# * Validate that Terms must have `name`, `starts_on`, `ends_on`, and `school_id`.
 # * Validate that the User has a `first_name`, a `last_name`, and an `email`.
 # * Validate that the User's `email` is unique.
 # * Validate that the User's `email` has the appropriate form for an e-mail address.  Use a regular expression.
