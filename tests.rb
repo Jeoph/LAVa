@@ -85,4 +85,9 @@ class ApplicationTest < Minitest::Test
     l = Lesson.create()
     refute l.id
   end
+
+  def test_validate_that_readings_have_order_number_lesson_id_and_url
+    r = Reading.create()
+    refute r.id
+  end
 end
