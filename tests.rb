@@ -108,4 +108,16 @@ class ApplicationTest < Minitest::Test
     c = Course.create(name: "Communication", course_code: "COM101")
     assert c.valid?
   end
+
+  def test_courses_must_have_unique_course_code_within_term_id
+    s = Term.create!(name: "Spring 2016")
+    f = Term.create!(name: "Fall 2016")
+    a = Course.new(name: "Accounting", course_code: "ACC101")
+    c = Course.new(name: "Communication", course_code: "ACC101")
+    s.courses << a
+    s.courses << c
+    assert_raises do s.save! end
+    f.courses << c
+    assert f.save!
+  end
 end

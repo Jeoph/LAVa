@@ -4,7 +4,7 @@ class Course < ActiveRecord::Base
   has_many :assignments, dependent: :destroy
 
   validates :name, presence: true
-  validates :course_code, presence: true
+  validates :course_code, presence: true, uniqueness: {scope: :term_id, message: "Term already has this course"}
 
   default_scope { order("courses.term_id DESC, courses.course_code, courses.id DESC") }
 
