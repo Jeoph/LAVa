@@ -28,40 +28,40 @@ class ApplicationTest < Minitest::Test
   end
 
   def test_associate_schools_with_terms
-    a = School.create(name: "Appalachian State University")
-    s = Term.create(name: "Spring 2016")
-    f = Term.create(name: "Fall 2016")
+    a = School.create!(name: "Appalachian State University")
+    s = Term.create!(name: "Spring 2016")
+    f = Term.create!(name: "Fall 2016")
     a.terms = [s, f]
     assert_equal a.terms, [s, f]
   end
 
   def test_associate_terms_with_courses
     output = ""
-    s = Term.create(name: "Spring 2016")
-    a = Course.create(name: "Accounting", course_code: "ACC101")
-    c = Course.create(name: "Communication", course_code: "COM101")
+    s = Term.create!(name: "Spring 2015")
+    a = Course.create!(name: "Psychology", course_code: "PSY101")
+    c = Course.create!(name: "Algebra", course_code: "MAT101")
     s.courses = [a, c]
     assert_raises do s.destroy end
-    f = Term.create(name: "Fall 2016")
+    f = Term.create!(name: "Fall 2016")
     f.destroy
     assert f.destroyed?
   end
 
   def test_associate_courses_with_course_students
     output = ""
-    a = Course.create(name: "Accounting", course_code: "ACC101")
-    g = CourseStudent.create(student_id: 1)
-    j = CourseStudent.create(student_id: 2)
+    a = Course.create!(name: "Tennis", course_code: "PHY101")
+    g = CourseStudent.create!(student_id: 1)
+    j = CourseStudent.create!(student_id: 2)
     a.course_students = [g, j]
     assert_raises do a.destroy end
-    c = Course.create(name: "Communication")
+    c = Course.create!(name: "Calculus", course_code: "MAT201")
     c.destroy
     assert c.destroyed?
   end
 
   def test_associate_assignments_with_courses
-    c = Course.create(name: "Computer Programming", course_code: "CS101")
-    a = Assignment.create(name: "Test Driven Development")
+    c = Course.create!(name: "Computer Programming", course_code: "CSP101")
+    a = Assignment.create!(name: "Test Driven Development")
     c.assignments << a
     c.destroy
     assert c.destroyed?
@@ -69,13 +69,13 @@ class ApplicationTest < Minitest::Test
   end
 
   def test_associate_lessons_with_pre_class_assignments
-    skip
+    a = Assignment.create!()
   end
 
   def test_school_has_many_courses_through_terms
-    a = School.create(name: "Appalachian State University")
-    s = Term.create(name: "Spring 2016")
-    c = Course.create(name: "Communication", course_code: "COM101")
+    a = School.create!(name: "Appalachian State University")
+    s = Term.create!(name: "Spring 2016")
+    c = Course.create!(name: "Biology", course_code: "BIO101")
     a.terms << s
     s.courses << c
     a.save!
@@ -85,13 +85,11 @@ class ApplicationTest < Minitest::Test
   end
 
   def test_validate_that_lessons_have_names
-    l = Lesson.create()
-    refute l.valid?
+    assert_raises do l = Lesson.create!() end
   end
 
   def test_validate_that_readings_have_order_number_lesson_id_and_url
-    r = Reading.create()
-    refute r.valid?
+    assert_raises do r = Reading.create!() end
   end
 
   def test_validate_reading_url_must_start_with_http_or_https

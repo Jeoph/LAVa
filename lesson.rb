@@ -1,6 +1,5 @@
 class Lesson < ActiveRecord::Base
-  belongs_to :assignment
-  #remember that we need another belongs_to assignment
+  belongs_to :pre_class_assignment, class_name: "Assignment", foreign_key: :pre_class_assignment_id
   validates :name, presence: true
   delegate :code_and_name, to: :course, prefix: true
 
