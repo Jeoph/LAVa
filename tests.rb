@@ -38,8 +38,8 @@ class ApplicationTest < Minitest::Test
   def test_associate_terms_with_courses
     output = ""
     s = Term.create(name: "Spring 2016")
-    a = Course.create(name: "Accounting")
-    c = Course.create(name: "Communication")
+    a = Course.create(name: "Accounting", course_code: "ACC101")
+    c = Course.create(name: "Communication", course_code: "COM101")
     s.courses = [a, c]
     assert_raises do s.destroy end
     f = Term.create(name: "Fall 2016")
@@ -49,7 +49,7 @@ class ApplicationTest < Minitest::Test
 
   def test_associate_courses_with_course_students
     output = ""
-    a = Course.create(name: "Accounting")
+    a = Course.create(name: "Accounting", course_code: "ACC101")
     g = CourseStudent.create(student_id: 1)
     j = CourseStudent.create(student_id: 2)
     a.course_students = [g, j]
@@ -60,7 +60,7 @@ class ApplicationTest < Minitest::Test
   end
 
   def test_associate_assignments_with_courses
-    c = Course.create(name: "Computer Programming")
+    c = Course.create(name: "Computer Programming", course_code: "CS101")
     a = Assignment.create(name: "Test Driven Development")
     c.assignments << a
     c.destroy
@@ -75,7 +75,7 @@ class ApplicationTest < Minitest::Test
   def test_school_has_many_courses_through_terms
     a = School.create(name: "Appalachian State University")
     s = Term.create(name: "Spring 2016")
-    c = Course.create(name: "Communication")
+    c = Course.create(name: "Communication", course_code: "COM101")
     a.terms << s
     s.courses << c
     a.save!
@@ -100,5 +100,12 @@ class ApplicationTest < Minitest::Test
     assert reading.valid?
     another_reading = Reading.create!(order_number: 3, lesson_id: 3, url: "https://jeoph.com")
     assert another_reading.valid?
+  end
+
+  def test_courses_must_have_course_code_and_name
+    assert_raises do Course.create!(name: "Communication") end
+    assert_raises do Course.create!(course_code: "COM101") end
+    c = Course.create(name: "Communication", course_code: "COM101")
+    assert c.valid?
   end
 end
