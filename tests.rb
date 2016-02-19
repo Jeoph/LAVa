@@ -78,16 +78,27 @@ class ApplicationTest < Minitest::Test
     c = Course.create(name: "Communication")
     a.terms << s
     s.courses << c
+    a.save!
+    s.save!
+    c.save!
     assert a.courses.include?(c)
   end
 
   def test_validate_that_lessons_have_names
     l = Lesson.create()
-    refute l.id
+    refute l.valid?
   end
 
   def test_validate_that_readings_have_order_number_lesson_id_and_url
     r = Reading.create()
-    refute r.id
+    refute r.valid?
+  end
+
+  def test_validate_reading_url_must_start_with_http_or_https
+    assert_raises do Reading.create!(order_number: 1, lesson_id: 1, url: "junk://") end
+    reading = Reading.create!(order_number: 2, lesson_id: 2, url: "http://www.booyah.com")
+    assert reading.valid?
+    another_reading = Reading.create!(order_number: 3, lesson_id: 3, url: "https://jeoph.com")
+    assert another_reading.valid?
   end
 end
