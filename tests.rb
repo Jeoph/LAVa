@@ -107,15 +107,18 @@ class ApplicationTest < Minitest::Test
     refute User.exists?(u2.id)
   end
 
-  
+  def test_user_email_format
+    u3 = User.create(first_name: "Tobias", last_name: "Funke", email: "actorz4ever@gmail.com")
+    u4 = User.create(first_name: "George Michael", last_name: "Bluth", email: "Y@LO@gmail.com")
+    assert User.find(u3.id)
+    refute User.exists?(u4.id)
+  end
 end
 
 
 # Person B:
 
 # * Associate `lessons` with their `in_class_assignments` (both directions).
-# * Validate that the User has a `first_name`, a `last_name`, and an `email`.
-# * Validate that the User's `email` is unique.
 # * Validate that the User's `email` has the appropriate form for an e-mail address.  Use a regular expression.
 # * Validate that the User's `photo_url` must start with `http://` or `https://`.  Use a regular expression.
 # * Validate that Assignments have a `course_id`, `name`, and `percent_of_grade`.
