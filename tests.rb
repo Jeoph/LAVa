@@ -80,4 +80,9 @@ class ApplicationTest < Minitest::Test
     s.courses << c
     assert a.courses.include?(c)
   end
+
+  def test_validate_that_lessons_have_names
+    l = Lesson.create()
+    refute l.id
+  end
 end
