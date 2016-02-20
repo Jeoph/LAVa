@@ -2,6 +2,8 @@ class Lesson < ActiveRecord::Base
   has_many :readings, dependent: :destroy
 
   belongs_to :course
+
+  belongs_to :in_class_assignment, class_name: "Assignment", foreign_key: "in_class_assignment_id"
   belongs_to :pre_class_assignment, class_name: "Assignment", foreign_key: :pre_class_assignment_id
 
   validates :name, presence: true
