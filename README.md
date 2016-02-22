@@ -1,6 +1,6 @@
 # Legacy Associations and Validations
 
-Follow the Lebowski
+This is a collection of legacy code that lacked the necessary associations and validations to enable easy connections between instances in the database. Such associations and validations have been added now for each class. 
 
 ## Description
 
